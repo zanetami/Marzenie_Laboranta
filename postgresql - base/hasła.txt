@@ -1,0 +1,2 @@
+labdream - haslo postgresql przy instalacji
+port 5432

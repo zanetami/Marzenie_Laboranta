@@ -1,2 +1,5 @@
-labdream - haslo postgresql przy instalacji
+server localhost
+database lab_dream
 port 5432
+username postgres
+labdream

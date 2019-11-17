@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
   }
 
   authorize() {
-    this.router.navigate(['/logged']);
+    this.router.navigate(['/logged/notifications']);
   }
 
 }

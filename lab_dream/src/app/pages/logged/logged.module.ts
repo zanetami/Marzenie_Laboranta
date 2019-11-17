@@ -10,7 +10,21 @@ import { LoggedPage } from './logged.page';
 const routes: Routes = [
   {
     path: '',
-    component: LoggedPage
+    component: LoggedPage,
+    children: [
+      {
+        path: 'notifications',
+        loadChildren: '../notifications/notifications.module#NotificationsPageModule'
+       },
+      {
+        path: 'statistics',
+        loadChildren: '../statistics/statistics.module#StatisticsPageModule'
+      },
+      {
+        path: 'user-management',
+        loadChildren: '../user-management/user-management.module#UserManagementPageModule'
+      }
+    ]
   }
 ];
 

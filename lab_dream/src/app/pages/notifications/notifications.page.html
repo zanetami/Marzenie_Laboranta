@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Witaj user.name</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logOut()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+      <ion-buttons slot="start">
+          <ion-button >
+            <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button >
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+  </ion-card>
+  
+  <ngx-datatable>
+  <ngx-datatable-column>
+    
+  </ngx-datatable-column>
+  </ngx-datatable>
+
+</ion-content>

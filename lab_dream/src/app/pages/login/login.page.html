@@ -1,0 +1,30 @@
+<ion-content>
+
+  <ion-card>
+    <ion-card-header color="primary">
+        Logowanie
+    </ion-card-header>
+    <ion-card-content>
+        <form>
+            <ion-list lines="full" class="ion-no-margin ion-no-padding">
+              <ion-item>
+                <ion-label position="stacked">Login<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input required type="text"></ion-input>
+              </ion-item>
+    
+              <ion-item>
+                <ion-label position="stacked">Hasło<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input required type="password"></ion-input>
+              </ion-item>
+        </ion-list>
+
+        <ion-button expand="full" type="submit" (click)="authorize()">
+            Zaloguj
+        </ion-button>
+        
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+

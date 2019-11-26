@@ -1,0 +1,50 @@
+<ion-content>
+
+    <ion-card>
+      <ion-card-header color="primary">
+          Rejestracja
+      </ion-card-header>
+      <ion-card-content>
+          <form>
+              <ion-list lines="full" class="ion-no-margin ion-no-padding">
+                <ion-item>
+                  <ion-label position="stacked">Login<ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="text"></ion-input>
+                </ion-item>
+      
+                <ion-item>
+                  <ion-label position="stacked">Hasło<ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="password"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Powtórz hasło<ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="rePassword"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Imię<ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="firstName"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Nazwisko<ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="lastName"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Firma</ion-label>
+                  <ion-input type="company"></ion-input>
+                </ion-item>
+
+          </ion-list>
+  
+          <ion-button expand="full" type="submit" (click)="register()">
+              Zarejestruj
+          </ion-button>
+          
+        </form>
+      </ion-card-content>
+    </ion-card>
+  
+  </ion-content>

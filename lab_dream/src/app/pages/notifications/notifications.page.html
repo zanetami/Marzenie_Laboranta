@@ -11,20 +11,30 @@
 
 <ion-content>
   <ion-card>
-      <ion-buttons slot="start">
-          <ion-button >
-            <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
-          </ion-button>
-          <ion-button >
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-button>
-        </ion-buttons>
+    <ion-toolbar>
+     <ion-buttons slot="end">
+        <ion-button >
+          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="deleteIssueActivated()" >
+          <ion-icon slot="icon-only" name="trash" [ngClass]="{'makeRed': canDeleteIssue}"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
   </ion-card>
-  
-  <ngx-datatable>
-  <ngx-datatable-column>
+  <div>
+    <ngx-datatable
+      class="material" 
+      [columnMode]="columnMode.force"
+      [columns]="columns" 
+      [rows]="rows"
+      headerHeight="50"
+      footerHeight="50"
+      rowHeight="50"
+      (activate)="onActivate($event)"
+      >
+    </ngx-datatable>
     
-  </ngx-datatable-column>
-  </ngx-datatable>
+  </div>
 
 </ion-content>

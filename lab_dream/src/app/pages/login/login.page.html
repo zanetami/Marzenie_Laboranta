@@ -5,20 +5,34 @@
         Logowanie
     </ion-card-header>
     <ion-card-content>
-        <form>
+        <form [formGroup]='loginForm'>
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
               <ion-item>
                 <ion-label position="stacked">Login<ion-text color="danger">*</ion-text></ion-label>
-                <ion-input required type="text"></ion-input>
+                <ion-input required type="text" formControlName="login"></ion-input>
               </ion-item>
+              <div class="error-messages">
+                <ng-container *ngFor="let error of errorMessages.login">
+                  <div class="error-message" *ngIf="loginForm.get('login').hasError(error.type) && (loginForm.get('login').dirty || loginForm.get('login').touched)">
+                    {{ error.message }}
+                  </div>
+                </ng-container>
+              </div>
     
               <ion-item>
                 <ion-label position="stacked">Hasło<ion-text color="danger">*</ion-text></ion-label>
-                <ion-input required type="password"></ion-input>
+                <ion-input required type="password" formControlName="password"></ion-input>
               </ion-item>
+              <div class="error-messages">
+                <ng-container *ngFor="let error of errorMessages.password">
+                  <div class="error-message" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                    {{ error.message }}
+                  </div>
+                </ng-container>
+              </div>
         </ion-list>
 
-        <ion-button expand="full" type="submit" (click)="authorize()">
+        <ion-button expand="full" type="submit" [disabled]="!loginForm.valid" (click)="authorize()">
             Zaloguj
         </ion-button>
         

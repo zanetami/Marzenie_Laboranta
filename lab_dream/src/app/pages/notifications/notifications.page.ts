@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-notifications',
@@ -30,12 +30,13 @@ export class NotificationsPage implements OnInit {
   userRole = 'user';
 
   canDeleteIssue = false;
-  actionPermission = false;
 
   constructor(
     private router: Router,
-    private alertService: AlertService
+    private alertController: AlertController
   ) {}
+
+  @ViewChild(AlertComponent, {static: true}) alertComponent: AlertComponent;
 
   ngOnInit() {
     this.userRole = 'admin';
@@ -115,11 +116,6 @@ export class NotificationsPage implements OnInit {
     this.canDeleteIssue = !this.canDeleteIssue;
   }
 
-  setActionPermission(bool) {
-    this.actionPermission = bool;
-    console.log(this.actionPermission);
-  }
-
   onActivate(event) {
     if (event.type === 'click') {
       if ( this.canDeleteIssue ) {
@@ -132,10 +128,7 @@ export class NotificationsPage implements OnInit {
 
   deleteIssue(object) {
     const index = this.rows.indexOf(object);
-    //this.alert.questionAlert('Czy na pewno usunąć to zgłoszenie?');
-    if (this.actionPermission) {
-      return this.rows.splice(index, 1);
-    }
+    return this.rows.splice(index, 1);
   }
 
   detailIssue(object) {}

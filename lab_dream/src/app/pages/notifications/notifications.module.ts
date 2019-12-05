@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { NotificationsPage } from './notifications.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AlertComponent } from 'src/app/components/alert/alert.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgxDatatableModule
   ],
-  declarations: [NotificationsPage]
+  declarations: [NotificationsPage],
+  providers: [AlertComponent]
 })
 export class NotificationsPageModule {}

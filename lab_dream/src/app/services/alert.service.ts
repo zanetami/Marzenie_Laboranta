@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { NotificationsPage } from '../pages/notifications/notifications.page';
 
 @Injectable({
@@ -7,15 +7,18 @@ import { NotificationsPage } from '../pages/notifications/notifications.page';
 })
 export class AlertService {
 
-  private alertResponse = new BehaviorSubject<boolean>(null);
-  currentAlertResponse = this.alertResponse.asObservable();
+  // private alertResponseSource = new BehaviorSubject<boolean>(null);
+  // alertResponse = this.alertResponseSource.asObservable();
 
-  notificationsPage: NotificationsPage;
+  // notificationsPage: NotificationsPage;
 
-  constructor() { }
+  // constructor() { }
 
-  setResponse(bool) {
-    this.notificationsPage.setActionPermission(bool);
-    console.log('here: ', bool);
-  }
+  // setAlertResponse(bool) {
+  //   this.alertResponseSource.next(bool);
+  // }
+
+  // getAlertResponse(): Observable<boolean> {
+  //   return this.alertResponse;
+  // }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-alert',
@@ -10,36 +9,36 @@ import { AlertService } from 'src/app/services/alert.service';
 export class AlertComponent implements OnInit {
 
   constructor(
-    private alertController: AlertController,
-    private alertService: AlertService
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {}
 
-  async questionAlert(question) {
-    const alert = await this.alertController.create({
-      // header: 'Alert',
-      // subHeader: 'Subtitle',
-      message: question,
-      buttons: [
-        {
-          text: 'Usuń',
-          role: 'delete',
-          handler: () => {
-            this.alertService.setResponse(true);
+  public async questionAlert(question) {
+      const alert = await this.alertController.create({
+        // header: 'Alert',
+        // subHeader: 'Subtitle',
+        message: question,
+        buttons: [
+          {
+            text: 'Usuń',
+            role: 'delete',
+            handler: () => {
+              return true;
+            }
+          },
+          {
+            text: 'Anuluj',
+            role: 'cancel',
+            handler: () => {
+              return false;
+            }
           }
-        },
-        {
-          text: 'Anuluj',
-          role: 'cancel',
-          handler: () => {
-            this.alertService.setResponse(false);
-          }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+      return false;
   }
 
 }

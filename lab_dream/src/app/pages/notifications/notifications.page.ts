@@ -8,7 +8,7 @@ import { AlertController, ToastController } from '@ionic/angular';
   templateUrl: './notifications.page.html',
   styleUrls: ['./notifications.page.scss'],
 })
-export class NotificationsPage implements OnInit {
+export class NotificationsPage {
 
   columnMode = ColumnMode;
   columns = [];
@@ -36,7 +36,7 @@ export class NotificationsPage implements OnInit {
     private toastController: ToastController
   ) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.userRole = 'admin';
     this.specifyColumns();
   }

@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
 
   login = '';
   password = '';
@@ -46,9 +46,6 @@ export class LoginPage implements OnInit {
       ]))
     });
    }
-
-  ngOnInit() {
-  }
 
   authorize() {
     this.router.navigate(['/logged/notifications']);

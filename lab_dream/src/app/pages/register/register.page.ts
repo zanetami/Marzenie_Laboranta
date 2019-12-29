@@ -8,7 +8,7 @@ import { RegisterPageModule } from './register.module';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage {
 
   registerForm: FormGroup;
   matchPasswordForm: FormGroup;
@@ -84,7 +84,7 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
   }
 
   register() {

@@ -9,7 +9,7 @@ import { AlertController, ToastController } from '@ionic/angular';
   templateUrl: './notification-details.page.html',
   styleUrls: ['./notification-details.page.scss'],
 })
-export class NotificationDetailsPage implements OnInit {
+export class NotificationDetailsPage {
 
   columnMode = ColumnMode;
   issue;
@@ -49,7 +49,7 @@ export class NotificationDetailsPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.getConnectedDevices();
   }
 

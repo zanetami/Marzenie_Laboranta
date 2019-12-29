@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Szczegóły zgłoszenia {{ issue.id_i}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Priorytet: {{ issue.priority }}</ion-card-subtitle>
+        <ion-card-title>Status: {{ issue.state }}</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <p>
+          Opis:
+          <br>
+          {{ issue.descr }}{{ issue.descr }}{{ issue.descr }}
+        </p>
+        <br>
+        <p>
+          Powiązania:
+        </p>
+      </ion-card-content>
+
+      <ngx-datatable
+      class="material" 
+      [columnMode]="columnMode.force"
+      [columns]="columns" 
+      [rows]="connectedDevices"
+      [scrollbarH]="true"
+      headerHeight="50"
+      footerHeight="50"
+      rowHeight="50"
+      >
+    </ngx-datatable>
+    </ion-card>
+    
+  </div>
+
+</ion-content>

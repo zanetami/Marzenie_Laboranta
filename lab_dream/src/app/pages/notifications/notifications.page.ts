@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { AlertComponent } from 'src/app/components/alert/alert.component';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-notifications',
@@ -33,18 +32,13 @@ export class NotificationsPage implements OnInit {
 
   constructor(
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
-
-  @ViewChild(AlertComponent, {static: true}) alertComponent: AlertComponent;
 
   ngOnInit() {
     this.userRole = 'admin';
     this.specifyColumns();
-  }
-
-  logOut() {
-    this.router.navigate(['']);
   }
 
   specifyColumns() {
@@ -112,25 +106,81 @@ export class NotificationsPage implements OnInit {
     }
   }
 
-  deleteIssueActivated() {
-    this.canDeleteIssue = !this.canDeleteIssue;
+  // #region popupy
+  async presentToast(message, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
+  }
+
+  async deleteAlert(issueObject) {
+    const alert = await this.alertController.create({
+      // header: 'Alert',
+      // subHeader: 'Subtitle',
+      message: 'Czy napewno usunąć zgłoszenie?',
+      buttons: [
+        {
+          text: 'Usuń',
+          role: 'delete',
+          handler: () => {
+            this.deleteIssue(issueObject);
+            this.presentToast('Zgłoszenie usunięte.', 1000);
+          }
+        },
+        {
+          text: 'Anuluj',
+          role: 'cancel',
+          handler: () => {
+            this.presentToast('Anulowano zdarzenie.', 1000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+}
+//#endregion
+
+  logOut() {
+    this.router.navigate(['']);
   }
 
   onActivate(event) {
     if (event.type === 'click') {
       if ( this.canDeleteIssue ) {
-        this.deleteIssue(event.row);
+        this.deleteAlert(event.row);
+        
       } else {
         this.detailIssue(event.row);
       }
     }
   }
 
+  //#region usuwanie zgłoszenia
   deleteIssue(object) {
     const index = this.rows.indexOf(object);
     return this.rows.splice(index, 1);
   }
 
-  detailIssue(object) {}
+  deleteIssueActivated() {
+    this.canDeleteIssue = !this.canDeleteIssue;
+  }
+  //#endregion
+
+  //#region szczegóły zgłoszenia
+  detailIssue(object) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        issue: JSON.stringify(object)
+      }
+    };
+    this.router.navigate(['notification-details'], navigationExtras);
+  }
+  //#endregion
+
+  //#region dodawanie zgłoszenia
+  ////#endregion
 
 }

@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { NotificationsPage } from './notifications.page';
+import { NotificationDetailsPage } from './notification-details.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 const routes: Routes = [
   {
     path: '',
-    component: NotificationsPage
+    component: NotificationDetailsPage
   }
 ];
 
@@ -23,6 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgxDatatableModule
   ],
-  declarations: [NotificationsPage]
+  declarations: [NotificationDetailsPage]
 })
-export class NotificationsPageModule {}
+export class NotificationDetailsPageModule {}

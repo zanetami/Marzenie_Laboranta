@@ -13,18 +13,18 @@ export class NotificationsPage implements OnInit {
   columnMode = ColumnMode;
   columns = [];
   rows = [
-    {id_i: '1', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '2', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '3', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '4', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '5', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '6', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '7', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '8', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '9', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '10', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '11', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
-    {id_i: '12', notif_d: '2019-11-12', lab: '410', priority: 'normal', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'done'},
+    {id_i: '1', notif_d: '2019-11-12', priority: 'Wysoki', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'W naprawie'},
+    {id_i: '2', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Oczekuje'},
+    {id_i: '3', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
+    {id_i: '4', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
+    {id_i: '5', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
+    {id_i: '6', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'W naprawie'},
+    {id_i: '7', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
+    {id_i: '8', notif_d: '2019-11-12', priority: 'Wysoki', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
+    {id_i: '9', notif_d: '2019-11-12', priority: 'Wysoki', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
+    {id_i: '10', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'W naprawie'},
+    {id_i: '11', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Oczekuje'},
+    {id_i: '12', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Oczekuje'},
   ];
   userRole = 'user';
 
@@ -49,10 +49,6 @@ export class NotificationsPage implements OnInit {
           prop: 'notif_d'
         },
         {
-          name: 'Sala',
-          prop: 'lab'
-        },
-        {
           name: 'Opis',
           prop: 'descr'
         },
@@ -72,10 +68,6 @@ export class NotificationsPage implements OnInit {
           prop: 'solve_d'
         },
         {
-          name: 'Sala',
-          prop: 'lab'
-        },
-        {
           name: 'Priorytet',
           prop: 'priority'
         },
@@ -91,16 +83,16 @@ export class NotificationsPage implements OnInit {
           prop: 'notif_d'
         },
         {
-          name: 'Sala',
-          prop: 'lab'
-        },
-        {
           name: 'Wykonawca',
           prop: 'solver_id'
         },
         {
           name: 'Status',
           prop: 'state'
+        },
+        {
+          name: 'Priorytet',
+          prop: 'priority'
         }
       ];
     }
@@ -140,7 +132,7 @@ export class NotificationsPage implements OnInit {
     });
 
     await alert.present();
-}
+  }
 //#endregion
 
   logOut() {

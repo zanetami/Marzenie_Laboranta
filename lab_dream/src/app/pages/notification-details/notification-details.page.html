@@ -2,12 +2,33 @@
   <ion-toolbar color="primary">
     <ion-title>Szczegóły zgłoszenia {{ issue.id_i}}</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/logged/notifications"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div *ngIf = "issue.state !== 'Rozwiązane'">
+    <ion-card>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+           Priorytet:
+           <ion-button (click)="changePriority('up')">
+             <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
+           </ion-button>
+           <ion-button (click)="changePriority('down')">
+            <ion-icon slot="icon-only" name="arrow-round-down"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          Status:
+          <ion-button (click)="changeState()">
+            <ion-icon slot="icon-only" name="arrow-round-forward"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+       </ion-toolbar>
+    </ion-card>
+  </div>
   <div>
     <ion-card>
       <ion-card-header>
@@ -32,7 +53,6 @@
       [columnMode]="columnMode.force"
       [columns]="columns" 
       [rows]="connectedDevices"
-      [scrollbarH]="true"
       headerHeight="50"
       footerHeight="50"
       rowHeight="50"

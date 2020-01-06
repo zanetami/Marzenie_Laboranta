@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
   templateUrl: './user-management.page.html',
   styleUrls: ['./user-management.page.scss'],
 })
-export class UserManagementPage implements OnInit {
+export class UserManagementPage {
 
   constructor(
     private router: Router,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
   }
 
   logOut() {

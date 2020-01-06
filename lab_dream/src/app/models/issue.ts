@@ -10,13 +10,13 @@ export interface Issue {
 }
 
 // enum State {
-//     Awaiting = 'awaiting',
-//     In_repair = 'in repair',
-//     Solved = 'solved'
+//     Awaiting = 'oczekuje',
+//     In_repair = 'w naprawie',
+//     Solved = 'rozwiązane'
 // }
 
 // enum Priority {
-//     High = 'high',
-//     Standard = 'standard',
-//     Low = 'low'
+//     High = 'wysoki',
+//     Standard = 'normalny',
+//     Low = 'niski'
 // }

@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
   templateUrl: './statistics.page.html',
   styleUrls: ['./statistics.page.scss'],
 })
-export class StatisticsPage implements OnInit {
+export class StatisticsPage {
 
   constructor(
     private router: Router,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
   }
 
   logOut() {

@@ -5,32 +5,67 @@
           Rejestracja
       </ion-card-header>
       <ion-card-content>
-          <form>
+          <form [formGroup]="registerForm">
               <ion-list lines="full" class="ion-no-margin ion-no-padding">
                 <ion-item>
                   <ion-label position="stacked">Login<ion-text color="danger">*</ion-text></ion-label>
-                  <ion-input required type="text"></ion-input>
+                  <ion-input required type="text" formControlName="login"></ion-input>
                 </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of errorMessages.login">
+                    <div class="error-message" *ngIf="registerForm.get('login').hasError(error.type) && (registerForm.get('login').dirty || registerForm.get('login').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
       
                 <ion-item>
                   <ion-label position="stacked">Hasło<ion-text color="danger">*</ion-text></ion-label>
-                  <ion-input required type="password"></ion-input>
+                  <ion-input required type="password" formControlName="password"></ion-input>
                 </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of errorMessages.password">
+                    <div class="error-message" *ngIf="registerForm.get('password').hasError(error.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
 
                 <ion-item>
                   <ion-label position="stacked">Powtórz hasło<ion-text color="danger">*</ion-text></ion-label>
-                  <ion-input required type="rePassword"></ion-input>
+                  <ion-input required type="password" formControlName="confirmPassword"></ion-input>
                 </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of errorMessages.confirmPassword">
+                    <div class="error-message" *ngIf="registerForm.get('confirmPassword').hasError(error.type) && (registerForm.get('confirmPassword').dirty || registerForm.get('confirmPassword').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
 
                 <ion-item>
                   <ion-label position="stacked">Imię<ion-text color="danger">*</ion-text></ion-label>
-                  <ion-input required type="firstName"></ion-input>
+                  <ion-input required type="text" formControlName="firstName"></ion-input>
                 </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of errorMessages.firstName">
+                    <div class="error-message" *ngIf="registerForm.get('firstName').hasError(error.type) && (registerForm.get('firstName').dirty || registerForm.get('firstName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
 
                 <ion-item>
                   <ion-label position="stacked">Nazwisko<ion-text color="danger">*</ion-text></ion-label>
-                  <ion-input required type="lastName"></ion-input>
+                  <ion-input required type="text" formControlName="lastName"></ion-input>
                 </ion-item>
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of errorMessages.lastName">
+                    <div class="error-message" *ngIf="registerForm.get('lastName').hasError(error.type) && (registerForm.get('lastName').dirty || registerForm.get('lastName').touched)">
+                      {{ error.message }}
+                    </div>
+                  </ng-container>
+                </div>
 
                 <ion-item>
                   <ion-label position="stacked">Firma</ion-label>
@@ -39,7 +74,7 @@
 
           </ion-list>
   
-          <ion-button expand="full" type="submit" (click)="register()">
+          <ion-button expand="full" type="submit" [disabled]="!registerForm.valid" (click)="register()">
               Zarejestruj
           </ion-button>
           

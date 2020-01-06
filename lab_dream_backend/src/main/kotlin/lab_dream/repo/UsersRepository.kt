@@ -1,7 +1,6 @@
-package com.hendisantika.repo
+package lab_dream.repo
 
-import com.hendisantika.model.Sensitive_data
-import com.hendisantika.model.Users
+import lab_dream.model.Users
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 

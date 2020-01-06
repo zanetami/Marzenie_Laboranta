@@ -1,4 +1,4 @@
-package com.hendisantika.model
+package lab_dream.model
 
 import javax.persistence.*
 

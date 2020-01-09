@@ -1,40 +1,31 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Witaj user.name</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="logOut()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>Witaj user.name</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="logOut()">
+                <ion-icon slot="icon-only" name="log-out"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-toolbar>
-     <ion-buttons slot="end">
-        <ion-button >
-          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-button (click)="deleteIssueActivated()" >
-          <ion-icon slot="icon-only" name="trash" [ngClass]="{'makeRed': canDeleteIssue}"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-card>
-  <div>
-    <ngx-datatable
-      class="material" 
-      [columnMode]="columnMode.force"
-      [columns]="columns" 
-      [rows]="rows"
-      headerHeight="50"
-      footerHeight="50"
-      rowHeight="50"
-      (activate)="onActivate($event)"
-      >
-    </ngx-datatable>
-    
-  </div>
+    <div>
+        <ngx-datatable class="material" [columnMode]="columnMode.force" [columns]="columns" [rows]="rows" headerHeight="50" footerHeight="50" rowHeight="50" (activate)="onActivate($event)">
+        </ngx-datatable>
 
+    </div>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="secondary">
+            <ion-icon name="more" [ngClass]="{'makeRed': canDeleteIssue}"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button color="light" (click)="addIssue()">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" (click)="deleteIssueActivated()">
+                <ion-icon name="trash" [ngClass]="{'makeRed': canDeleteIssue}"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
 </ion-content>

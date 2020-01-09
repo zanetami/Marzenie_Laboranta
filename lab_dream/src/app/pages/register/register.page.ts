@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { RegisterPageModule } from './register.module';
 
 @Component({
   selector: 'app-register',

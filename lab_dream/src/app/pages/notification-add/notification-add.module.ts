@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { NotificationDetailsPage } from './notification-details.page';
+import { NotificationAddPage } from './notification-add.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 const routes: Routes = [
   {
     path: '',
-    component: NotificationDetailsPage
+    component: NotificationAddPage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes),
     NgxDatatableModule
   ],
-  declarations: [NotificationDetailsPage]
+  declarations: [NotificationAddPage]
 })
-export class NotificationDetailsPageModule {}
+export class NotificationAddPageModule {}

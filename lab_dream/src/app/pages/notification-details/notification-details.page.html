@@ -14,16 +14,16 @@
         <ion-buttons slot="start">
            Priorytet:
            <ion-button (click)="changePriority('up')">
-             <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
+             <ion-icon slot="icon-only" name="arrow-up"></ion-icon>
            </ion-button>
            <ion-button (click)="changePriority('down')">
-            <ion-icon slot="icon-only" name="arrow-round-down"></ion-icon>
+            <ion-icon slot="icon-only" name="arrow-down"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
           Status:
           <ion-button (click)="changeState()">
-            <ion-icon slot="icon-only" name="arrow-round-forward"></ion-icon>
+            <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
           </ion-button>
         </ion-buttons>
        </ion-toolbar>
@@ -43,12 +43,13 @@
           {{ issue.descr }}{{ issue.descr }}{{ issue.descr }}
         </p>
         <br>
-        <p>
+        <p *ngIf="connectedDevices.length > 0">
           Powiązania:
         </p>
       </ion-card-content>
 
       <ngx-datatable
+      *ngIf="connectedDevices.length > 0"
       class="material" 
       [columnMode]="columnMode.force"
       [columns]="columns" 

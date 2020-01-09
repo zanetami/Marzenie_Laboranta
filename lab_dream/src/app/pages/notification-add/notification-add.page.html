@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>Dodaj zgłoszenie</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/logged/notifications"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="issueForm">
+        <div>
+            <ion-card>
+                <ion-card-content>
+                    <ion-label position="floating">Opis:
+                        <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-item>
+                        <ion-textarea formControlName="description"></ion-textarea>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.description">
+                            <div class="error-message" *ngIf="issueForm.get('description').hasError(error.type) && (issueForm.get('description').dirty || issueForm.get('description').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <ion-toolbar>
+                        <ion-label>Powiązania:</ion-label>
+                        <ion-buttons slot="end">
+                            <ion-button (click)="addConnection()" color="secondary">
+                                <ion-icon slot="icon-only" name="add"></ion-icon>
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-card-content>
+
+                <ngx-datatable *ngIf="allConnections.length > 0" class="material" [columnMode]="columnMode.force" [columns]="columns" [rows]="allConnections" headerHeight="50" footerHeight="50" rowHeight="50">
+                </ngx-datatable>
+            </ion-card>
+
+        </div>
+        <ion-fab (click)="addAlert()" vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button type="submit" [disabled]="!issueForm.valid" color="secondary">
+                <ion-icon name="save"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+    </form>
+</ion-content>

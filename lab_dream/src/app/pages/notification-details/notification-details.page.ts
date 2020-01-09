@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Device } from 'src/app/models/device';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -97,8 +97,8 @@ export class NotificationDetailsPage {
     // model: string;
     this.connectedDevices = [
       {id_d: 'BHBi67', type: 'Sprzęt', brand: 'Samsung', model: 'Note5', lab: '435'},
-      {id_d: 'QHJ78J', type: 'oprogramowanie', brand: 'mathematica', model: '8.1', lab: '675'},
-      {id_d: 'MOX5D7', type: 'sieć', brand: 'internet', model: '', lab: '142'},
+      {id_d: 'QHJ78J', type: 'Oprogramowanie', brand: 'mathematica', model: '8.1', lab: '675'},
+      {id_d: 'MOX5D7', type: 'Sieć', brand: 'internet', model: '', lab: '142'},
     ]
   }
 

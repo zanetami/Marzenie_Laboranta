@@ -173,6 +173,18 @@ export class NotificationsPage {
   //#endregion
 
   //#region dodawanie zgłoszenia
-  ////#endregion
+  addIssue() {
+    // let issue = [
+
+    // ]
+    // let navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     issue: JSON.stringify(object)
+    //   }
+    // };
+    this.router.navigate(['notification-add']);
+  }
+
+  //#endregion
 
 }

@@ -10,10 +10,8 @@
     text-align: center !important;
 }
 
-.makeRed {
-    color: var(--ion-color-danger)
-}
-
-ngx-datatable {
-    margin: 15px 0;
+.error-messages {
+    font-size: 0.7em;
+    color: red;
+    text-align: center;
 }

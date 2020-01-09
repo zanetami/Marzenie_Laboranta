@@ -1,0 +1,72 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>Dodaj zgłoszenie</ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="closeModal()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-card-content>
+            <form [formGroup]="deviceForm">
+                <ion-list lines="full" class="ion-no-margin ion-no-padding">
+                    <ion-item>
+                        <ion-label position="stacked">Kod identyfikacyjny
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input required type="text" formControlName="id_d"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.id_d">
+                            <div class="error-message" *ngIf="deviceForm.get('id_d').hasError(error.type) && (deviceForm.get('id_d').dirty || deviceForm.get('id_d').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item>
+                        <ion-label position="stacked">Sala
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input required type="text" formControlName="lab"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.lab">
+                            <div class="error-message" *ngIf="deviceForm.get('lab').hasError(error.type) && (deviceForm.get('lab').dirty || deviceForm.get('lab').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item class="select-type">
+                        <ion-label>Typ
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-select formControlName="type" interface="popover" required>
+                            <ion-select-option value="Sprzęt" selected>Sprzęt</ion-select-option>
+                            <ion-select-option value="Oprogramowanie">Oprogramowanie</ion-select-option>
+                            <ion-select-option value="Sieć">Sieć</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.type">
+                            <div class="error-message" *ngIf="deviceForm.get('type').hasError(error.type) && (deviceForm.get('type').dirty || deviceForm.get('type').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                </ion-list>
+
+                <ion-button expand="full" type="submit" [disabled]="!deviceForm.valid" (click)="addConnection()">
+                    Dodaj powiązanie
+                </ion-button>
+
+            </form>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

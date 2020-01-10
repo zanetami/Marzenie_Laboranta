@@ -8,17 +8,22 @@ const routes: Routes = [
     loadChildren: './pages/logged/logged.module#LoggedPageModule'
   },
   { 
-    path: 'notification-details',
+    path: 'logged/user-add-edit',
+    loadChildren: './pages/user-add-edit/user-add-edit.module#UserAddEditPageModule'
+  },
+  { 
+    path: 'logged/notification-details',
     loadChildren: './pages/notification-details/notification-details.module#NotificationDetailsPageModule'
   },
   { 
-    path: 'notification-add', 
+    path: 'logged/notification-add', 
     loadChildren: './pages/notification-add/notification-add.module#NotificationAddPageModule'
   },
   { 
-    path: 'notification-device-add', 
+    path: 'logged/notification-device-add', 
     loadChildren: './pages/notification-device-add/notification-device-add.module#NotificationDeviceAddPageModule'
   },
+
 ];
 
 @NgModule({

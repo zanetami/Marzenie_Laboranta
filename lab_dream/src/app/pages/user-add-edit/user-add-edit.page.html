@@ -1,0 +1,119 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>{{ title }}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/logged/user-management"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card>
+        <ion-card-content>
+            <form [formGroup]="userForm">
+                <ion-list lines="full" class="ion-no-margin ion-no-padding">
+                    <ion-item class="select-role">
+                        <ion-label>Rola
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-select formControlName="role" interface="popover" required>
+                            <ion-select-option value="Użytkownik" selected>Użytkownik</ion-select-option>
+                            <ion-select-option value="Serwisant">Serwisant</ion-select-option>
+                            <ion-select-option value="Administrator">Administrator</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.role">
+                            <div class="error-message" *ngIf="userForm.get('role').hasError(error.role) && (userForm.get('role').dirty || userForm.get('role').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item>
+                        <ion-label position="stacked">Login
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input required type="text" formControlName="login"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.login">
+                            <div class="error-message" *ngIf="userForm.get('login').hasError(error.type) && (userForm.get('login').dirty || userForm.get('login').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item>
+                        <ion-label position="stacked">Hasło
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input required type="password" formControlName="password"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.password">
+                            <div class="error-message" *ngIf="userForm.get('password').hasError(error.type) && (userForm.get('password').dirty || userForm.get('password').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item>
+                        <ion-label position="stacked">Powtórz hasło
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input required type="password" formControlName="confirmPassword"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.confirmPassword">
+                            <div class="error-message" *ngIf="userForm.get('confirmPassword').hasError(error.type) && (userForm.get('confirmPassword').dirty || userForm.get('confirmPassword').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item>
+                        <ion-label position="stacked">Imię
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input required type="text" formControlName="firstName"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.firstName">
+                            <div class="error-message" *ngIf="userForm.get('firstName').hasError(error.type) && (userForm.get('firstName').dirty || userForm.get('firstName').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item>
+                        <ion-label position="stacked">Nazwisko
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input required type="text" formControlName="lastName"></ion-input>
+                    </ion-item>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of errorMessages.lastName">
+                            <div class="error-message" *ngIf="userForm.get('lastName').hasError(error.type) && (userForm.get('lastName').dirty || userForm.get('lastName').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ion-item>
+                        <ion-label position="stacked">Firma</ion-label>
+                        <ion-input type="company" formControlName="company"></ion-input>
+                    </ion-item>
+
+                </ion-list>
+
+                <ion-button expand="full" type="submit" [disabled]="!userForm.valid" (click)="saveUser()">
+                    Zapisz
+                </ion-button>
+
+            </form>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

@@ -168,7 +168,7 @@ export class NotificationsPage {
         issue: JSON.stringify(object)
       }
     };
-    this.router.navigate(['notification-details'], navigationExtras);
+    this.router.navigate(['logged/notification-details'], navigationExtras);
   }
   //#endregion
 
@@ -182,7 +182,7 @@ export class NotificationsPage {
     //     issue: JSON.stringify(object)
     //   }
     // };
-    this.router.navigate(['notification-add']);
+    this.router.navigate(['logged/notification-add']);
   }
 
   //#endregion

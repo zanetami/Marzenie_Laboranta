@@ -17,13 +17,13 @@ const routes: Routes = [
         loadChildren: '../notifications/notifications.module#NotificationsPageModule'
        },
       {
+        path: 'user-management',
+        loadChildren: '../user-management/user-management.module#UserManagementPageModule'
+      },
+      {
         path: 'statistics',
         loadChildren: '../statistics/statistics.module#StatisticsPageModule'
       },
-      {
-        path: 'user-management',
-        loadChildren: '../user-management/user-management.module#UserManagementPageModule'
-      }
     ]
   }
 ];

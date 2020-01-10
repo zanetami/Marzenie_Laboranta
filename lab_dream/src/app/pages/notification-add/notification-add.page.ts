@@ -92,15 +92,53 @@ export class NotificationAddPage {
     await alert.present();
   }
 
+  async deleteAlert(object) {
+    const alert = await this.alertController.create({
+      // header: 'Alert',
+      // subHeader: 'Subtitle',
+      message: 'Czy napewno usunąć powiązanie?',
+      buttons: [
+        {
+          text: 'Usuń',
+          role: 'delete',
+          handler: () => {
+            this.deleteConnection(object);
+            this.presentToast('Powiązanie usunięte.', 1000);
+          }
+        },
+        {
+          text: 'Anuluj',
+          role: 'cancel',
+          handler: () => {
+            this.presentToast('Anulowano zdarzenie.', 1000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   async addConnection() {
     const modal = await this.modalController.create({
       component: NotificationDeviceAddPage
     });
     modal.onDidDismiss().then((data) => {
       this.allConnections = this.allConnections.concat(data['data']);
-      console.log(this.allConnections);
     });
     return await modal.present();
+  }
+
+  async deleteConnection(object) {
+    let index = this.allConnections.indexOf(object, 0);
+    if (index > -1) {
+      this.allConnections.splice(index, 1);
+    }
+  }
+
+  onConnectionActivate(event) {
+    let connection = event.row;
+    this.deleteAlert(connection);
   }
 
   addIssue() {

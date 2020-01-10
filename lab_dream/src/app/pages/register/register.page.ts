@@ -67,11 +67,11 @@ export class RegisterPage {
         Validators.pattern('^[a-zżźćńłśąęóA-ZŃĆŹŻĄŚŁÓĘ-]{2,}')
       ])),
     }, {
-      validators: this.MatchPassword
+      validators: this.matchPassword
     });
   }
 
-  MatchPassword(abstractControl: AbstractControl) {
+  matchPassword(abstractControl: AbstractControl) {
     let password = abstractControl.get('password').value;
     let confirmPassword = abstractControl.get('confirmPassword').value;
     if (password !== confirmPassword) {

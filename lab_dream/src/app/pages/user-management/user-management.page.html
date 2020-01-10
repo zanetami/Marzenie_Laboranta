@@ -1,14 +1,31 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Zarządzanie użytkownikami</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="logOut()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>Zarządzanie użytkownikami</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="logOut()">
+                <ion-icon slot="icon-only" name="log-out"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <div>
+        <ngx-datatable class="material" [columnMode]="columnMode.force" [scrollbarH]="true" [columns]="columns" [rows]="rows" headerHeight="50" footerHeight="50" rowHeight="50" (activate)="onActivate($event)">
+        </ngx-datatable>
 
+    </div>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="secondary">
+            <ion-icon name="more" [ngClass]="{'makeRed': canDeleteUser}"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button color="light" (click)="saveUser()">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" (click)="deleteUserActivated()">
+                <ion-icon name="trash" [ngClass]="{'makeRed': canDeleteUser}"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
 </ion-content>

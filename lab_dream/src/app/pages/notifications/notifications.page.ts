@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';

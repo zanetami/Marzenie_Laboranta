@@ -1,14 +1,31 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Statystyki</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="logOut()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>Statystyki</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="logOut()">
+                <ion-icon slot="icon-only" name="log-out"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+    <div>
+        <ion-item class="select-role">
+            <ion-label>Dla:</ion-label>
+            <ion-select [(ngModel)]="userSelect" interface="popover" multiple="false" [selectedText]="userSelect" (ionChange)="codeSelected()" required >
+                <ion-select-option *ngFor="let user of allUsers" value="{{user.name}} {{user.lastname}} {{user.role}}">
+                    {{user.name}} {{user.lastname}} {{user.role}}
+                </ion-select-option>
+             </ion-select>
+        </ion-item>
+    </div>
+    <div class="chart">
+        <canvas baseChart [data]="chartData" [labels]="chartLabels" 
+        [chartType]="chartType" height="350px" width="350px"
+        [options]="options">
+        </canvas>
+    </div>
 
 </ion-content>

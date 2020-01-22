@@ -1,20 +1,33 @@
 package lab_dream.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import org.hibernate.annotations.Type
+import org.hibernate.annotations.TypeDef
+import org.springframework.data.jpa.repository.Query
+import javax.persistence.*
 
+enum class ROLE{
+    service,
+    user,
+    admin
+}
 @Entity
+@Table(name="users")
 class Users (
-        val first_name:String,
-        val last_name:String,
+       @Column(name = "name")
+        val name:String,
+        @Column(name="lastname")
+        val lastname:String,
+        @Column(name="role")
         val role:String,
+        @Column(name="company")
         val company:String,
-        @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        val id:Long=-1
+        @GeneratedValue(strategy = GenerationType.AUTO) @Id
+        var id_u:Long=-1
 
 ){
     private constructor():this("","","","")
+
+
 }
+
 

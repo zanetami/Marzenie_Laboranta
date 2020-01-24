@@ -15,8 +15,8 @@
         <ion-item class="select-role">
             <ion-label>Dla:</ion-label>
             <ion-select [(ngModel)]="userSelect" interface="popover" multiple="false" [selectedText]="userSelect" (ionChange)="codeSelected()" required >
-                <ion-select-option *ngFor="let user of allUsers" value="{{user.name}} {{user.lastname}} {{user.role}}">
-                    {{user.name}} {{user.lastname}} {{user.role}}
+                <ion-select-option *ngFor="let user of allUsers" value="{{user.id_u}} {{user.name}} {{user.lastname}}">
+                    {{user.id_u}} {{user.name}} {{user.lastname}}
                 </ion-select-option>
              </ion-select>
         </ion-item>

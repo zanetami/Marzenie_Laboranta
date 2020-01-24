@@ -8,28 +8,28 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-  private mainUrl = 'http://localhost:3000/users'
+  private mainUrl = 'http://localhost:3000/users/'
 
   constructor(private http: HttpClient) { }
 
   loginUser(login: String, password: String): Observable<any> {
-    return this.http.get(this.mainUrl + `/loginuser/${login}/${password}`);
+    return this.http.get(this.mainUrl + `loginuser/${login}/${password}`);
   }
 
   registerUser(newUser: User): Observable<any> {
-    return this.http.post(this.mainUrl + `/registeruser`, newUser);
+    return this.http.post(this.mainUrl + `registeruser`, newUser);
   }
 
   getAllUsers(): Observable<any> {
-    return this.http.get(this.mainUrl + `/getallusers`);
+    return this.http.get(this.mainUrl + `getallusers`);
   }
 
   deleteUser(id: Number): Observable<any> {
-    return this.http.delete(this.mainUrl + `/deleteUser/${id}`);
+    return this.http.delete(this.mainUrl + `deleteUser/${id}`);
   }
 
   updateUser(newUser: User, id: number): Observable<any> {
-    return this.http.put(this.mainUrl + `/updateuser/${id}`, newUser);
+    return this.http.put(this.mainUrl + `updateuser/${id}`, newUser);
   }
 
 }

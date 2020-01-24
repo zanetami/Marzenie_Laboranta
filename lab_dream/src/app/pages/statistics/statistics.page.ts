@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ChartType } from 'chart.js';
 import { MultiDataSet, Label } from 'ng2-charts';
 import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
+import { StatisticsService } from 'src/app/services/statistics.service';
 
 @Component({
   selector: 'app-statistics',
@@ -16,40 +18,56 @@ export class StatisticsPage {
   public options: any = {
     legend: { position: 'bottom' }
   }
-  public chartData: MultiDataSet = [
-    [350, 450, 100],
-    [50, 150, 120],
-    [250, 130, 70],
-  ];
+  public chartData: MultiDataSet = [[0,0,0],[0,0,0],[0,0,0]];
 
-  userSelect: User;
-  allUsers = [
-    {},
-    {id_u: 4,name: 'Julia', lastname: 'Iskierka', company: 'super comp',role: 'Serwisant'},
-    {id_u: 5,name: 'fdsfds', lastname: 'Iskierka', company: 'szkoła politechnika',role: 'Serwisant'},
-    {id_u: 6,name: 'Julia', lastname: 'sfddsfds', company: 'corpo rat',role: 'Serwisant'},
-    {id_u: 7,name: 'Szymon', lastname: 'Lipiec', company: 'szkoła politechnika',role: 'Użytkownik'},
-    {id_u: 8,name: 'vfdsvfv', lastname: 'Lipiec', company: 'corpo rat',role: 'Użytkownik'},
-    {id_u: 9,name: 'Szymon', lastname: 'dsfvfdsvdfv', company: 'super comp',role: 'Użytkownik'},
-    {id_u: 4,name: 'Julia', lastname: 'Iskierka', company: 'super comp',role: 'Serwisant'},
-    {id_u: 5,name: 'fdsfds', lastname: 'Iskierka', company: 'szkoła politechnika',role: 'Serwisant'},
-    {id_u: 6,name: 'Julia', lastname: 'sfddsfds', company: 'corpo rat',role: 'Serwisant'},
-    {id_u: 7,name: 'Szymon', lastname: 'Lipiec', company: 'szkoła politechnika',role: 'Użytkownik'},
-    {id_u: 8,name: 'vfdsvfv', lastname: 'Lipiec', company: 'corpo rat',role: 'Użytkownik'},
-    {id_u: 9,name: 'Szymon', lastname: 'dsfvfdsvdfv', company: 'super comp',role: 'Użytkownik'},
-    {id_u: 4,name: 'Julia', lastname: 'Iskierka', company: 'super comp',role: 'Serwisant'},
-    {id_u: 5,name: 'fdsfds', lastname: 'Iskierka', company: 'szkoła politechnika',role: 'Serwisant'},
-    {id_u: 6,name: 'Julia', lastname: 'sfddsfds', company: 'corpo rat',role: 'Serwisant'},
-    {id_u: 7,name: 'Szymon', lastname: 'Lipiec', company: 'szkoła politechnika',role: 'Użytkownik'},
-    {id_u: 8,name: 'vfdsvfv', lastname: 'Lipiec', company: 'corpo rat',role: 'Użytkownik'},
-    {id_u: 9,name: 'Szymon', lastname: 'dsfvfdsvdfv', company: 'super comp',role: 'Użytkownik'},
-  ];
+  userSelect = ' Wszyscy';
+  allUsers = [{id_u: null, login: null, password: null, name: 'Wszyscy', lastname: null, company: null, role: null}];
   
   constructor(
     private router: Router,
+    private userService: UserService,
+    private statisticsService: StatisticsService
   ) { }
 
   ionViewWillEnter() {
+    this.getAllUsers();
+    this.codeSelected();
+  }
+
+  ionViewWillLeave() {
+    this.allUsers = [{id_u: null, login: null, password: null, name: 'Wszyscy', lastname: null, company: null, role: null}];
+    this.userSelect = '';
+  }
+
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe( response => {
+      response.forEach(element => {
+        if (element.role === 'Serwisant') {
+          this.allUsers.push(element);
+        }
+      });
+    });
+  }
+
+  codeSelected() {
+    let id = this.userSelect.substring(0, 2);
+    if (id.length === 0 || id === ' W') {
+      this.statisticsService.getStats().subscribe( table => {
+        this.chartData = [
+          [table[0], table[1], table[2]],
+          [table[3], table[4], table[5]],
+          [table[6], table[7], table[8]],
+        ];
+      });
+    } else {
+      this.statisticsService.getStatsUser(id).subscribe( table => {
+        this.chartData = [
+          [table[0], table[1], table[2]],
+          [table[3], table[4], table[5]],
+          [table[6], table[7], table[8]],
+        ];
+      });
+    }
   }
 
   logOut() {

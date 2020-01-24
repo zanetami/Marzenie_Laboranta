@@ -1,8 +1,5 @@
 package lab_dream.model
 
-import org.hibernate.annotations.Type
-import org.hibernate.annotations.TypeDef
-import org.springframework.data.jpa.repository.Query
 import javax.persistence.*
 
 enum class ROLE{

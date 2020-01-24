@@ -3,20 +3,14 @@ package lab_dream.controller
 
 
 
-import jdk.nashorn.internal.objects.Global.getDate
 import lab_dream.model.*
 import lab_dream.repo.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import sun.security.provider.MD4
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
-import javax.management.relation.Role
 
 @RestController
 class WebController {
@@ -32,6 +26,8 @@ class WebController {
     lateinit var repository_id:Rel_idRepository
     @Autowired
     lateinit var  repository_ui:Rel_uiRepository
+
+
     @RequestMapping("/registration/{user}")
     fun registration(@PathVariable user:String):Boolean {
         var U = user.split(" ")

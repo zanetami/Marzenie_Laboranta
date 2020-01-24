@@ -1,12 +1,9 @@
 package lab_dream.repo
 
-import lab_dream.model.ROLE
 import lab_dream.model.Users
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
-import java.util.*
-import javax.management.relation.Role
 
 @Repository
 interface UsersRepository:CrudRepository<Users,Long> {

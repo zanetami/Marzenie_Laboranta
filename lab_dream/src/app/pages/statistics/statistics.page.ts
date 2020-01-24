@@ -42,7 +42,7 @@ export class StatisticsPage {
   getAllUsers() {
     this.userService.getAllUsers().subscribe( response => {
       response.forEach(element => {
-        if (element.role === 'Serwisant') {
+        if (element.role !== 'Administrator') {
           this.allUsers.push(element);
         }
       });

@@ -7,4 +7,5 @@ export interface Issue {
     accept_d: Date;
     solve_d: Date;
     solver_id: number;
+    initiator_id: number;
 }

@@ -1,43 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.page.html',
   styleUrls: ['./user-management.page.scss'],
 })
-export class UserManagementPage {
+export class UserManagementPage{
 
   columnMode = ColumnMode;
   columns = [];
-  rows = [
-    {id_u: 1,name: 'Hubert', lastname: 'Wawrzacz', company: 'super comp',role: 'Administrator'},
-    {id_u: 2,name: 'Hubert', lastname: 'aasdsadas', company: 'corpo rat',role: 'Administrator'},
-    {id_u: 3,name: 'dsadsadsa', lastname: 'Wawrzacz', company: 'szkoła politechnika',role: 'Administrator'},
-    {id_u: 4,name: 'Julia', lastname: 'Iskierka', company: 'super comp',role: 'Serwisant'},
-    {id_u: 5,name: 'fdsfds', lastname: 'Iskierka', company: 'szkoła politechnika',role: 'Serwisant'},
-    {id_u: 6,name: 'Julia', lastname: 'sfddsfds', company: 'corpo rat',role: 'Serwisant'},
-    {id_u: 7,name: 'Szymon', lastname: 'Lipiec', company: 'szkoła politechnika',role: 'Użytkownik'},
-    {id_u: 8,name: 'vfdsvfv', lastname: 'Lipiec', company: 'corpo rat',role: 'Użytkownik'},
-    {id_u: 9,name: 'Szymon', lastname: 'dsfvfdsvdfv', company: 'super comp',role: 'Użytkownik'},
-  ];
+  rows: User[] = [];
 
   canDeleteUser = false;
 
   constructor(
     private router: Router,
+    private userService: UserService,
     private alertController: AlertController,
-    private toastController: ToastController
-  ) { }
+    private toastController: ToastController,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ionViewWillEnter() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.getAllUsers();
+    });
     this.specifyColumns();
+    this.getAllUsers();
+  }
+
+  ionViewWillLeave() {
+    this.canDeleteUser = false;
+    this.rows = [];
+  }
+
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe( response => {
+      this.rows = response;
+    });
   }
 
   specifyColumns() {
     this.columns = [
+      {
+        name: 'Login',
+        prop: 'login'
+      },
       {
         name: 'Imię',
         prop: 'name'
@@ -56,6 +69,7 @@ export class UserManagementPage {
       }
     ];
   }
+
 
     // #region popupy
     async presentToast(message, duration) {
@@ -77,7 +91,6 @@ export class UserManagementPage {
             role: 'delete',
             handler: () => {
               this.deleteUser(userObject);
-              this.presentToast('Użytkownik usunięty.', 1000);
             }
           },
           {
@@ -110,8 +123,12 @@ export class UserManagementPage {
 
   // #region usuwanie użytkownika
   deleteUser(object) {
-    const index = this.rows.indexOf(object);
-    return this.rows.splice(index, 1);
+    this.userService.deleteUser(object.id_u).subscribe( response => {
+      if (response == true) {
+        this.presentToast('Użytkownik usunięty.', 1000);
+        this.getAllUsers();
+      }
+    });
   }
 
   deleteUserActivated() {

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
+import { ToastController } from '@ionic/angular';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-register',
@@ -42,7 +45,9 @@ export class RegisterPage {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private toastController: ToastController
   ) {
     this.registerForm = this.formBuilder.group({
       login: new FormControl('', Validators.compose([
@@ -58,6 +63,7 @@ export class RegisterPage {
       confirmPassword: new FormControl('', Validators.compose([
         Validators.required
       ])),
+      company: new FormControl('', Validators.compose([])),
       firstName: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zżźćńłśąęóA-ZŃĆŹŻĄŚŁÓĘ]{2,}')
@@ -83,10 +89,36 @@ export class RegisterPage {
     }
   }
 
-  ionViewWillEnter() {
+  ionViewWillLeave() {
+    this.registerForm.clearValidators()
+    this.registerForm.reset()
+  }
+
+  async presentToast(message, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
   }
 
   register() {
+    const login = this.registerForm.get('login').value;
+    const password = this.registerForm.get('password').value;
+    const firstName = this.registerForm.get('firstName').value;
+    const lastName = this.registerForm.get('lastName').value;
+    const company = this.registerForm.get('company').value;
+
+    let newUser: User = {id_u: null, login: login, password: password, name: firstName, lastname: lastName, company: company, role: 'Użytkownik'};
+
+    this.userService.registerUser(newUser).subscribe( response => {
+      if (response === true) {
+        this.presentToast(`Zaloguj się ${firstName}`, 1000);
+        this.router.navigate(['/main/login']);
+      } else {
+        this.presentToast(`Login jest już zajęty.`, 1000);
+      }
+    })
     this.router.navigate(['/main/login']);
   }
 

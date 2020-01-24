@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { ToastController, AlertController } from '@ionic/angular';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-add-edit',
@@ -55,6 +56,7 @@ export class UserAddEditPage {
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private alertController: AlertController,
+    private userService: UserService
   ) { 
     this.userForm = this.formBuilder.group({
       role: new FormControl('', Validators.compose([
@@ -110,12 +112,20 @@ export class UserAddEditPage {
   }
 
   fillForm() {
-    // pobierz login i wstaw do formularza
-    // this.userForm.get('login').setValue(this.userToEdit.);
+    this.userForm.get('login').setValue(this.userToEdit.login);
     this.userForm.get('firstName').setValue(this.userToEdit.name);
     this.userForm.get('lastName').setValue(this.userToEdit.lastname);
     this.userForm.get('role').setValue(this.userToEdit.role);
     this.userForm.get('company').setValue(this.userToEdit.company);
+  }
+
+  backToUserManagement() {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        getUsers: true
+      }
+    };
+    this.router.navigate(['logged/user-management'], navigationExtras);
   }
 
   async presentToast(message, duration) {
@@ -161,8 +171,32 @@ export class UserAddEditPage {
   }
 
   editUser() {
-    // this.userToEdit wyslij dane do edycji
-    this.router.navigate(['logged/user-management']);
+    let login = this.userForm.get('login').value;
+    let password = this.userForm.get('password').value;
+    let name = this.userForm.get('firstName').value;
+    let lastName = this.userForm.get('lastName').value;
+    let role = this.userForm.get('role').value;
+    let company = this.userForm.get('company').value;
+    let user: User = 
+    {
+      id_u: null,
+      login: login,
+      password: password,
+      name: name,
+      lastname: lastName,
+      role: role,
+      company: company
+    };
+    this.userService.updateUser(user, this.userToEdit.id_u).subscribe( response => {
+      if (response == true) {
+        this.userForm.reset();
+        this.userForm.clearValidators();
+        this.presentToast('Edytowano użytkownika.', 1000);
+        this.backToUserManagement();
+      } else {
+        this.presentToast('Login jest już zajęty.', 1000);
+      }
+    });
   }
 
   addUser() {
@@ -175,14 +209,22 @@ export class UserAddEditPage {
     let user: User = 
     {
       id_u: null,
+      login: login,
+      password: password,
       name: name,
       lastname: lastName,
       role: role,
       company: company
     };
-    // wyslij usera, login, haslo do dodania
-    this.router.navigate(['logged/user-management']);
-    this.presentToast('Dodano użytkownika.', 1000);
+    this.userService.registerUser(user).subscribe( response => {
+      if (response == true) {
+        this.userForm.reset();
+        this.userForm.clearValidators();
+        this.presentToast('Dodano użytkownika.', 1000);
+      } else {
+        this.presentToast('Login jest już zajęty.', 1000);
+      }
+    });
   }
 
 }

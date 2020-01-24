@@ -57,7 +57,7 @@ export class NotificationDeviceAddPage {
     let idInput = this.deviceForm.get('id_d').value;
     let labInput = this.deviceForm.get('lab').value;
     let typeSelect = this.deviceForm.get('type').value;
-    let element: Device = {id_d: idInput, type: typeSelect, brand: '', model: '', lab: labInput};
+    let element: Device = {id_d: idInput, type: typeSelect, brand: '', model: '', lab: labInput, id_i: null};
     this.connections = this.connections.concat(element);
     this.presentToast('Dodano powiązanie.', 1000);
 

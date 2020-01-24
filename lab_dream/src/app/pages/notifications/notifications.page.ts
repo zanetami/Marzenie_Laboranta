@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
 
@@ -9,6 +9,8 @@ import { AlertController, ToastController } from '@ionic/angular';
   styleUrls: ['./notifications.page.scss'],
 })
 export class NotificationsPage {
+
+  loggedUser = null;
 
   columnMode = ColumnMode;
   columns = [];
@@ -33,12 +35,19 @@ export class NotificationsPage {
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ionViewWillEnter() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params && params.loggedUser) {
+        this.loggedUser = JSON.parse(params.loggedUser);
+      }
+    });
     this.userRole = 'admin';
     this.specifyColumns();
+    console.log(this.loggedUser);
   }
 
   specifyColumns() {

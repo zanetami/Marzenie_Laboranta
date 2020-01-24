@@ -1,14 +1,9 @@
 export interface Device {
-    id_d: string;
+    id_d: number;
     type: string;
     brand: string;
     model: string;
     lab: string;
+    id_i: number;
 }
 
-// enum Type {
-//     Hardware = 'hardware',
-//     Software = 'software',
-//     Network = 'network',
-//     Peripherals = 'peripherals'
-// }

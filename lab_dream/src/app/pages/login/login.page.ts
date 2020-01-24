@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +11,6 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class LoginPage {
 
-  login = '';
-  password = '';
   loginForm: FormGroup;
 
   errorMessages = {
@@ -31,7 +31,9 @@ export class LoginPage {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private toastController: ToastController
   ) {
     this.loginForm = this.formBuilder.group({
       login: new FormControl('', Validators.compose([
@@ -45,10 +47,37 @@ export class LoginPage {
         Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
       ]))
     });
-   }
+  }
+
+  ionViewWillLeave() {
+    this.loginForm.clearValidators()
+    this.loginForm.reset()
+  }
+
+  async presentToast(message, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
+  }
+
 
   authorize() {
-    this.router.navigate(['/logged/notifications']);
+    const login = this.loginForm.get('login').value;
+    const password = this.loginForm.get('password').value;
+    this.userService.loginUser(login, password).subscribe ( response => {
+      if (response !== false) {
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            loggedUser: JSON.stringify(response)
+          }
+        };
+        this.router.navigate(['/logged/notifications'], navigationExtras);
+      } else {
+        this.presentToast('Taki użytkownik nie istnieje.', 1000);
+      }
+    });
   }
 
 }

@@ -2,7 +2,7 @@
     <ion-toolbar color="primary">
         <ion-title>{{ title }}</ion-title>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/logged/user-management"></ion-back-button>
+            <ion-back-button (click)="backToUserManagement()"></ion-back-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>

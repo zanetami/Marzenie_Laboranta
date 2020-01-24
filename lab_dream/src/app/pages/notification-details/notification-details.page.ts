@@ -96,9 +96,9 @@ export class NotificationDetailsPage {
     // brand: string;
     // model: string;
     this.connectedDevices = [
-      {id_d: 'BHBi67', type: 'Sprzęt', brand: 'Samsung', model: 'Note5', lab: '435'},
-      {id_d: 'QHJ78J', type: 'Oprogramowanie', brand: 'mathematica', model: '8.1', lab: '675'},
-      {id_d: 'MOX5D7', type: 'Sieć', brand: 'internet', model: '', lab: '142'},
+      {id_d: 432432, type: 'Sprzęt', brand: 'Samsung', model: 'Note5', lab: '435', id_i: 2},
+      {id_d: 3243234, type: 'Oprogramowanie', brand: 'mathematica', model: '8.1', lab: '675', id_i: 2},
+      {id_d: 353432, type: 'Sieć', brand: 'internet', model: '', lab: '142', id_i: 2},
     ]
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Issue } from '../models/issue';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +13,27 @@ export class IssueService {
 
   constructor(private http: HttpClient) { }
 
-  getAllIssues(): Observable<any> {
-    return this.http.get(`getallissues`);
+  getAllIssuesByUser(user: User): Observable<any> {
+    return this.http.post(this.mainUrl + `getallissuesbyuser`, user);
   }
 
-  addIssues(description): Observable<any> {
-    return this.http.get(`addissue/${description}`);
+  addIssue(tab, initiator_id): Observable<any> {
+    return this.http.post(this.mainUrl + `addissue/${initiator_id}`, tab);
+  }
+
+  getIssueByDate(date): Observable<any> {
+    return this.http.post(this.mainUrl + `getissuebydate`, date);
   }
 
   setIssueSolver(id_i, solver_id): Observable<any> {
-    return this.http.get(`setissuesolver/${id_i}/${solver_id}`);
+    return this.http.get(this.mainUrl + `setissuesolver/${id_i}/${solver_id}`);
   }
 
   updateIssue(newIssue: Issue): Observable<any> {
-    return this.http.put(`updateissue`, newIssue);
+    return this.http.post(this.mainUrl + `updateissue`, newIssue);
   }
 
   deleteIssue(id): Observable<any> {
-    return this.http.delete(`deleteissue/${id}`);
+    return this.http.delete(this.mainUrl + `deleteissue/${id}`);
   }
 }

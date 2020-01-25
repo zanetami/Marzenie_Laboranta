@@ -35,6 +35,25 @@ export class LoginPage {
     private userService: UserService,
     private toastController: ToastController
   ) {
+    this.initializeForm();
+  }
+  
+
+  ionViewWillLeave() {
+    this.loginForm.clearValidators()
+    this.loginForm.reset()
+    this.initializeForm();
+  }
+
+  async presentToast(message, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
+  }
+
+  initializeForm() {
     this.loginForm = this.formBuilder.group({
       login: new FormControl('', Validators.compose([
         Validators.required,
@@ -47,19 +66,6 @@ export class LoginPage {
         Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
       ]))
     });
-  }
-
-  ionViewWillLeave() {
-    this.loginForm.clearValidators()
-    this.loginForm.reset()
-  }
-
-  async presentToast(message, duration) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: duration
-    });
-    toast.present();
   }
 
 

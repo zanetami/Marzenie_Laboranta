@@ -4,6 +4,9 @@ import { ModalController, ToastController, AlertController } from '@ionic/angula
 import { NotificationDeviceAddPage } from '../notification-device-add/notification-device-add.page';
 import { Device } from 'src/app/models/device';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { IssueService } from 'src/app/services/issue.service';
+import { DeviceService } from 'src/app/services/device.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-notification-add',
@@ -39,12 +42,33 @@ export class NotificationAddPage {
     ]
   };
 
+  initiator_id = -1;
+
   constructor(
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private toastController: ToastController,
-    private alertController: AlertController
-  ) { 
+    private alertController: AlertController,
+    private issueService: IssueService,
+    private deviceService: DeviceService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.initializeForm();
+   }
+
+  ionViewWillEnter() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params && params.initiator_id) {
+        this.initiator_id = JSON.parse(params.initiator_id);
+      }
+    });
+    
+  }
+
+  ionViewWillLeave() {
+    this.issueForm.clearValidators();
+    this.issueForm.reset();
+    this.allConnections = [];
     this.initializeForm();
   }
 
@@ -76,7 +100,6 @@ export class NotificationAddPage {
           role: 'add',
           handler: () => {
             this.addIssue();
-            this.presentToast('Zgłoszenie dodane.', 1000);
           }
         },
         {
@@ -142,10 +165,33 @@ export class NotificationAddPage {
   }
 
   addIssue() {
-     // stworz obiekt issue i dodaj do bazy
-     // stworz foreach connection i dodaj obiekty do bazy
-    this.issueForm.get('description').setValue('');
-    this.issueForm.get('description').untouched;
+    const description = this.issueForm.get('description').value;
+    const date = new Date();
+    const dateToGo = [date];
+    const tab = [description, date];
+    
+    let id = -1;
+    this.issueService.addIssue(tab, this.initiator_id).subscribe( response => {
+      if (response === true) {
+        if (this.allConnections.length > 0) {
+          this.issueService.getIssueByDate(dateToGo).subscribe( response => {
+            id = response[0].id_i;
+            this.allConnections.forEach( device => {
+              device.id_i = id;
+              this.deviceService.addDevice(device).subscribe( response => {});
+            });
+            this.presentToast('Pomyślnie dodano zgłoszenie.', 1000);
+           });
+        } else {
+          this.presentToast('Pomyślnie dodano zgłoszenie.', 1000);
+        }
+      } else {
+        this.presentToast('Wystąpił błąd podczas dodawania zgłoszenia.', 1000);
+      }
+    });
+
+    this.issueForm.clearValidators();
+    this.issueForm.reset();
     this.initializeForm();
   }
 

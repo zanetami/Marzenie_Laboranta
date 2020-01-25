@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
+import { IssueService } from 'src/app/services/issue.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-notifications',
@@ -10,25 +12,12 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class NotificationsPage {
 
-  loggedUser = null;
+  loggedUser: User = null;
 
   columnMode = ColumnMode;
   columns = [];
-  rows = [
-    {id_i: '1', notif_d: '2019-11-12', priority: 'Wysoki', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'W naprawie'},
-    {id_i: '2', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Oczekuje'},
-    {id_i: '3', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
-    {id_i: '4', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
-    {id_i: '5', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
-    {id_i: '6', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'W naprawie'},
-    {id_i: '7', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
-    {id_i: '8', notif_d: '2019-11-12', priority: 'Wysoki', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
-    {id_i: '9', notif_d: '2019-11-12', priority: 'Wysoki', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Rozwiązane'},
-    {id_i: '10', notif_d: '2019-11-12', priority: 'Normalny', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'W naprawie'},
-    {id_i: '11', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Oczekuje'},
-    {id_i: '12', notif_d: '2019-11-12', priority: 'Niski', descr: 'adasdsadsadas as dsad as asd as', accept_d: '2019-11-12', solve_d: '2019-11-12', solver_id: '3', state: 'Oczekuje'},
-  ];
-  userRole = 'user';
+  rows = [];
+  solvers: User[] = [];
 
   canDeleteIssue = false;
 
@@ -36,26 +25,40 @@ export class NotificationsPage {
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private issueService: IssueService
   ) {}
 
   ionViewWillEnter() {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params && params.loggedUser) {
         this.loggedUser = JSON.parse(params.loggedUser);
+        this.getAllNotifications();
+        this.specifyColumns();
       }
     });
-    this.userRole = 'admin';
+    this.getAllNotifications();
     this.specifyColumns();
-    console.log(this.loggedUser);
+  }
+
+  getAllNotifications() {
+    this.issueService.getAllIssuesByUser(this.loggedUser).subscribe( response => {
+      this.rows = response;
+    });
+  }
+
+  datePipe(date) {
+    return date.substring(0, 10);
   }
 
   specifyColumns() {
-    if (this.userRole === 'user') {
+    if (this.loggedUser.role === 'Użytkownik') {
       this.columns = [
         {
           name: 'Dodano',
-          prop: 'notif_d'
+          prop: 'notif_d',
+          pipe: { transform: this.datePipe}
+
         },
         {
           name: 'Opis',
@@ -66,15 +69,17 @@ export class NotificationsPage {
           prop: 'state'
         }
       ];
-    } else if (this.userRole === 'service') {
+    } else if (this.loggedUser.role === 'Serwisant') {
       this.columns = [
         {
           name: 'Przyjęto',
-          prop: 'accept_d'
+          prop: 'accept_d',
+          pipe: { transform: this.datePipe}
         },
         {
           name: 'Zamknięto',
-          prop: 'solve_d'
+          prop: 'solve_d',
+          pipe: { transform: this.datePipe}
         },
         {
           name: 'Priorytet',
@@ -85,15 +90,17 @@ export class NotificationsPage {
           prop: 'state'
         }
       ];
-    } else if (this.userRole === 'admin') {
+    } else if (this.loggedUser.role === 'Administrator') {
       this.columns = [
         {
           name: 'Dodano',
-          prop: 'notif_d'
+          prop: 'notif_d',
+          pipe: { transform: this.datePipe}
         },
         {
           name: 'Wykonawca',
-          prop: 'solver_id'
+          prop: 'solver_id',
+
         },
         {
           name: 'Status',
@@ -127,7 +134,6 @@ export class NotificationsPage {
           role: 'delete',
           handler: () => {
             this.deleteIssue(issueObject);
-            this.presentToast('Zgłoszenie usunięte.', 1000);
           }
         },
         {
@@ -161,8 +167,16 @@ export class NotificationsPage {
 
   //#region usuwanie zgłoszenia
   deleteIssue(object) {
-    const index = this.rows.indexOf(object);
-    return this.rows.splice(index, 1);
+    this.issueService.deleteIssue(object.id_i).subscribe( response => {
+      if (response === true) {
+        this.presentToast('Zgłoszenie usunięte.', 1000);
+        this.getAllNotifications();
+
+      } else {
+        this.presentToast('Wystąpił błąd podczas usuwania zgłoszenia', 1000);
+      }
+    });
+    
   }
 
   deleteIssueActivated() {
@@ -183,15 +197,12 @@ export class NotificationsPage {
 
   //#region dodawanie zgłoszenia
   addIssue() {
-    // let issue = [
-
-    // ]
-    // let navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     issue: JSON.stringify(object)
-    //   }
-    // };
-    this.router.navigate(['logged/notification-add']);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        initiator_id: JSON.stringify(this.loggedUser.id_u)
+      }
+    };
+    this.router.navigate(['logged/notification-add'], navigationExtras);
   }
 
   //#endregion

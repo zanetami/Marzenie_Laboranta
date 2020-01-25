@@ -16,6 +16,10 @@ export class UserService {
     return this.http.get(this.mainUrl + `loginuser/${login}/${password}`);
   }
 
+  getUserById(id: number): Observable<any> {
+    return this.http.get(this.mainUrl + `getuserbyid/${id}`);
+  }
+
   registerUser(newUser: User): Observable<any> {
     return this.http.post(this.mainUrl + `registeruser`, newUser);
   }

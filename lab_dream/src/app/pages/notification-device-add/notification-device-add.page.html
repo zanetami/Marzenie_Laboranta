@@ -16,9 +16,8 @@
                 <ion-list lines="full" class="ion-no-margin ion-no-padding">
                     <ion-item>
                         <ion-label position="stacked">Kod identyfikacyjny
-                            <ion-text color="danger">*</ion-text>
                         </ion-label>
-                        <ion-input required type="text" formControlName="id_d"></ion-input>
+                        <ion-input type="text" formControlName="id_d"></ion-input>
                     </ion-item>
                     <div class="error-messages">
                         <ng-container *ngFor="let error of errorMessages.id_d">
@@ -50,6 +49,7 @@
                             <ion-select-option value="Sprzęt" selected>Sprzęt</ion-select-option>
                             <ion-select-option value="Oprogramowanie">Oprogramowanie</ion-select-option>
                             <ion-select-option value="Sieć">Sieć</ion-select-option>
+                            <ion-select-option value="Sala">Sala</ion-select-option>
                         </ion-select>
                     </ion-item>
                     <div class="error-messages">

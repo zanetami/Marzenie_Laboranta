@@ -49,6 +49,36 @@ export class RegisterPage {
     private userService: UserService,
     private toastController: ToastController
   ) {
+    this.initializeForm();
+  }
+
+  matchPassword(abstractControl: AbstractControl) {
+    let password = abstractControl.get('password').value;
+    let confirmPassword = abstractControl.get('confirmPassword').value;
+    if (password !== confirmPassword) {
+        abstractControl.get('confirmPassword').setErrors({
+          MatchPassword: true
+        });
+    } else {
+      return null;
+    }
+  }
+
+  ionViewWillLeave() {
+    this.registerForm.clearValidators();
+    this.registerForm.reset();
+    this.initializeForm();
+  }
+
+  async presentToast(message, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
+  }
+
+  initializeForm() {
     this.registerForm = this.formBuilder.group({
       login: new FormControl('', Validators.compose([
         Validators.required,
@@ -75,31 +105,6 @@ export class RegisterPage {
     }, {
       validators: this.matchPassword
     });
-  }
-
-  matchPassword(abstractControl: AbstractControl) {
-    let password = abstractControl.get('password').value;
-    let confirmPassword = abstractControl.get('confirmPassword').value;
-    if (password !== confirmPassword) {
-        abstractControl.get('confirmPassword').setErrors({
-          MatchPassword: true
-        });
-    } else {
-      return null;
-    }
-  }
-
-  ionViewWillLeave() {
-    this.registerForm.clearValidators()
-    this.registerForm.reset()
-  }
-
-  async presentToast(message, duration) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: duration
-    });
-    toast.present();
   }
 
   register() {

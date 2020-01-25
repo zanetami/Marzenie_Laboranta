@@ -38,6 +38,14 @@
     
       <ion-card-content>
         <p>
+          Wykonawca: 
+          <ion-select [(ngModel)]="userSolver" interface="popover" multiple="false" [selectedText]="userSolver" (ionChange)="userSelected($event)" [disabled]="issue.state == 'Rozwiązane'" required>
+            <ion-select-option *ngFor="let user of servicemans" value="{{user.id_u}} {{user.name}} {{user.lastname}}">
+            {{user.id_u}} {{user.name}} {{user.lastname}}
+            </ion-select-option>
+         </ion-select>
+        </p>
+        <p>
           Opis:
           <br>
           {{ issue.descr }}{{ issue.descr }}{{ issue.descr }}

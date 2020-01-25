@@ -50,7 +50,7 @@ export class StatisticsPage {
   }
 
   codeSelected() {
-    let id = this.userSelect.substring(0, 2);
+    let id = this.userSelect.split(' ')[0];
     if (id.length === 0 || id === ' W') {
       this.statisticsService.getStats().subscribe( table => {
         this.chartData = [

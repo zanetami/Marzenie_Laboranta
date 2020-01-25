@@ -19,7 +19,8 @@ export class NotificationDeviceAddPage {
       { type: 'maxLength', message: 'Numer sali jest za długi.' }
     ],
     id_d: [
-      { type: 'required', message: 'Kod identyfikacyjny jest wymagany.' }
+      { type: 'pattern', message: 'Kod może składać się tylko z liczb.' },
+      { type: 'maxLength', message: 'Numer identyfikacyjny jest za długi.' }
     ],
     type: [
       { type: 'required', message: 'Typ jest wymagany.' }
@@ -40,7 +41,10 @@ export class NotificationDeviceAddPage {
         Validators.required,
         Validators.maxLength(5)
       ])),
-      id_d: new FormControl('', Validators.required),
+      id_d: new FormControl('', Validators.compose([
+        Validators.maxLength(7),
+        Validators.pattern('^[0-9].{1,7}$')
+      ])),
       type: new FormControl('', Validators.required)
     });
   }
@@ -57,16 +61,12 @@ export class NotificationDeviceAddPage {
     let idInput = this.deviceForm.get('id_d').value;
     let labInput = this.deviceForm.get('lab').value;
     let typeSelect = this.deviceForm.get('type').value;
-    let element: Device = {id_d: idInput, type: typeSelect, brand: '', model: '', lab: labInput, id_i: null};
+    let element: Device = {id_d: idInput, type: typeSelect, lab: labInput, id_i: null};
     this.connections = this.connections.concat(element);
     this.presentToast('Dodano powiązanie.', 1000);
 
-    this.deviceForm.get('id_d').setValue('');
-    this.deviceForm.get('id_d').untouched;
-    this.deviceForm.get('lab').setValue('');
-    this.deviceForm.get('lab').untouched;
-    this.deviceForm.get('type').setValue('');
-    this.deviceForm.get('type').untouched;
+    this.deviceForm.clearValidators()
+    this.deviceForm.reset()
     this.initializeForm();
   }
 

@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Device } from 'src/app/models/device';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
+import { DeviceService } from 'src/app/services/device.service';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
+import { IssueService } from 'src/app/services/issue.service';
 
 @Component({
   selector: 'app-notification-details',
@@ -13,6 +17,8 @@ export class NotificationDetailsPage {
 
   columnMode = ColumnMode;
   issue;
+  userSolver;
+  servicemans: User[] = [];
   connectedDevices: Device[] = [];
   columns = [
     {
@@ -26,21 +32,16 @@ export class NotificationDetailsPage {
     {
       name: 'Identyfikator',
       prop: 'id_d'
-    },
-    // {
-    //   name: 'Marka',
-    //   prop: 'brand'
-    // },
-    // {
-    //   name: 'Model/wersja',
-    //   prop: 'model'
-    // }
+    }
   ];
 
   constructor(
     private route: ActivatedRoute,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private deviceService: DeviceService,
+    private userService: UserService,
+    private issueService: IssueService
   ) { 
     this.route.queryParams.subscribe(params => {
       if (params && params.issue) {
@@ -51,6 +52,8 @@ export class NotificationDetailsPage {
 
   ionViewWillEnter() {
     this.getConnectedDevices();
+    this.getSolver();
+    this.getServicemans();
   }
 
   //#region popupy
@@ -65,7 +68,11 @@ export class NotificationDetailsPage {
           role: 'solve',
           handler: () => {
             this.issue.state = 'Rozwiązane';
-            this.presentToast('Rozwiązano zgłoszenie', 1000);
+            this.issueService.updateIssue(this.issue).subscribe( response => {
+              if (response === true) {
+                this.presentToast('Rozwiązano zgłoszenie', 1000);
+              }
+            });
           }
         },
         {
@@ -90,16 +97,33 @@ export class NotificationDetailsPage {
   //#endregion
 
   getConnectedDevices() {
-    //this.connectedDevices = getfromAPI gdzie lab sie zgadza
-    // id_d: number;
-    // type: string;
-    // brand: string;
-    // model: string;
-    this.connectedDevices = [
-      {id_d: 432432, type: 'Sprzęt', brand: 'Samsung', model: 'Note5', lab: '435', id_i: 2},
-      {id_d: 3243234, type: 'Oprogramowanie', brand: 'mathematica', model: '8.1', lab: '675', id_i: 2},
-      {id_d: 353432, type: 'Sieć', brand: 'internet', model: '', lab: '142', id_i: 2},
-    ]
+    this.deviceService.getAllConnectedDevices(this.issue.id_i).subscribe( response => {
+      this.connectedDevices = response;
+    });
+  }
+
+  getServicemans() {
+    this.userService.getAllUsers().subscribe( response => {
+      response.forEach(user => {
+        if (user.role === 'Serwisant') {
+          this.servicemans.push(user);
+        }
+      });
+    });
+  }
+
+  getSolver() {
+    if (this.issue.solver_id != null) {
+      this.userService.getUserById(this.issue.solver_id).subscribe( response => {
+        this.userSolver = response[0].id_u + ' ' + response[0].name + ' '  + response[0].lastname;
+      });
+    }
+  }
+
+  userSelected(event) {
+    const solver_id = event.detail.value.split(' ')[0];
+    this.issueService.setIssueSolver(this.issue.id_i, solver_id).subscribe( response => {});
+    this.userSolver = event.detail.value;
   }
 
   changePriority(direction) {
@@ -134,12 +158,21 @@ export class NotificationDetailsPage {
         }
       }
     }
-    // przeslij do bazy zmiane
+    this.issueService.updateIssue(this.issue).subscribe( response => {
+      if (response === true) {
+        this.presentToast('Zmieniono priorytet.', 1000);
+      }
+    });
   }
 
   changeState() {
     if (this.issue.state === 'Oczekuje') {
       this.issue.state = 'W naprawie';
+      this.issueService.updateIssue(this.issue).subscribe( response => {
+        if (response === true) {
+          this.presentToast('Zmieniono status.', 1000);
+        }
+      });
     } else if ( this.issue.state === 'W naprawie' ) {
       this.solveAlert();
     }

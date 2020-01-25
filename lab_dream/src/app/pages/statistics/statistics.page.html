@@ -11,7 +11,7 @@
 
 <ion-content>
 
-    <div>
+    <div *ngIf="loggedUser.role === 'Administrator'">
         <ion-item class="select-role">
             <ion-label>Dla:</ion-label>
             <ion-select [(ngModel)]="userSelect" interface="popover" multiple="false" [selectedText]="userSelect" (ionChange)="codeSelected()" required >

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Device } from 'src/app/models/device';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -7,6 +7,7 @@ import { DeviceService } from 'src/app/services/device.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { IssueService } from 'src/app/services/issue.service';
+import { LoggedUserService } from 'src/app/services/logged-user.service';
 
 @Component({
   selector: 'app-notification-details',
@@ -18,6 +19,7 @@ export class NotificationDetailsPage {
   columnMode = ColumnMode;
   issue;
   userSolver;
+  loggedUser;
   servicemans: User[] = [];
   connectedDevices: Device[] = [];
   columns = [
@@ -41,19 +43,26 @@ export class NotificationDetailsPage {
     private toastController: ToastController,
     private deviceService: DeviceService,
     private userService: UserService,
-    private issueService: IssueService
+    private issueService: IssueService,
+    private router: Router,
+    private loggedUserService: LoggedUserService
   ) { 
     this.route.queryParams.subscribe(params => {
       if (params && params.issue) {
         this.issue = JSON.parse(params.issue);
       }
     });
+    this.loggedUser = this.loggedUserService.loggedUser
   }
 
   ionViewWillEnter() {
     this.getConnectedDevices();
     this.getSolver();
     this.getServicemans();
+  }
+
+  backToNotifications() {
+    this.router.navigate(['logged/notifications']);
   }
 
   //#region popupy

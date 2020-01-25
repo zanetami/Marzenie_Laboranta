@@ -3,6 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { ToastController } from '@ionic/angular';
+import { LoggedUserService } from 'src/app/services/logged-user.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,8 @@ export class LoginPage {
     private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loggedUserService: LoggedUserService
   ) {
     this.initializeForm();
   }
@@ -79,7 +81,11 @@ export class LoginPage {
             loggedUser: JSON.stringify(response)
           }
         };
+        this.loggedUserService.loggedUser = response;
         this.router.navigate(['/logged/notifications'], navigationExtras);
+        this.loginForm.clearValidators()
+        this.loginForm.reset()
+        this.initializeForm();
       } else {
         this.presentToast('Taki użytkownik nie istnieje.', 1000);
       }

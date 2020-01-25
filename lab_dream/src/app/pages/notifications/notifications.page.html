@@ -15,7 +15,7 @@
         </ngx-datatable>
 
     </div>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="loggedUser.role !== 'Serwisant'">
         <ion-fab-button color="secondary">
             <ion-icon name="more" [ngClass]="{'makeRed': canDeleteIssue}"></ion-icon>
         </ion-fab-button>

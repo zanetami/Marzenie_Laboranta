@@ -4,6 +4,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
+import { LoggedUserService } from 'src/app/services/logged-user.service';
 
 @Component({
   selector: 'app-user-management',
@@ -17,16 +18,19 @@ export class UserManagementPage{
   rows: User[] = [];
 
   canDeleteUser = false;
+  loggedUser;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private loggedUserService: LoggedUserService
   ) {}
 
   ionViewWillEnter() {
+    this.loggedUser = this.loggedUserService.loggedUser;
     this.activatedRoute.queryParams.subscribe(params => {
       this.getAllUsers();
     });
@@ -123,12 +127,18 @@ export class UserManagementPage{
 
   // #region usuwanie użytkownika
   deleteUser(object) {
-    this.userService.deleteUser(object.id_u).subscribe( response => {
-      if (response == true) {
-        this.presentToast('Użytkownik usunięty.', 1000);
-        this.getAllUsers();
-      }
-    });
+    if (object.id_u === this.loggedUser.id_u) {
+      this.presentToast('Nie możesz usunąć swojego konta.', 1000);
+    } else {
+      this.userService.deleteUser(object.id_u).subscribe( response => {
+        if (response == true) {
+          this.presentToast('Użytkownik usunięty.', 1000);
+          this.getAllUsers();
+        } else if (response === false ) {
+          this.presentToast('Nie możesz usunąć użytkownika z przydzielonym zgłoszeniem.', 1000);
+        }
+      });
+    }
   }
 
   deleteUserActivated() {

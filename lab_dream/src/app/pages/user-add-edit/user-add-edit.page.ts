@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { ToastController, AlertController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
+import { LoggedUserService } from 'src/app/services/logged-user.service';
+import { IssueService } from 'src/app/services/issue.service';
 
 @Component({
   selector: 'app-user-add-edit',
@@ -13,7 +15,9 @@ import { UserService } from 'src/app/services/user.service';
 export class UserAddEditPage {
 
   title = 'Dodaj użytkownika';
-  userToEdit: User;
+  userToEdit: User = {id_u: null, login: null, password: null, name: null, lastname: null, role: null, company: null};
+  canEditRole = false;
+  loggedUser;
 
   userForm: FormGroup;
   matchPasswordForm: FormGroup;
@@ -56,7 +60,9 @@ export class UserAddEditPage {
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private alertController: AlertController,
-    private userService: UserService
+    private userService: UserService,
+    private issueService: IssueService,
+    private loggedUserService: LoggedUserService
   ) { 
     this.userForm = this.formBuilder.group({
       role: new FormControl('', Validators.compose([
@@ -91,12 +97,20 @@ export class UserAddEditPage {
     this.route.queryParams.subscribe(params => {
       if (params && params.user) {
         this.userToEdit = JSON.parse(params.user);
+        if (this.userToEdit.role === 'Serwisant') {
+          this.issueService.getAllIssuesByUser(this.userToEdit).subscribe( response => {
+            if (response.length > 0) {
+              this.canEditRole = true;
+            }
+          });
+        }
         this.title = 'Edytuj użytkownika';
         this.fillForm();
       } else {
         this.title = 'Dodaj użytkownika';
       }
     });
+    this.loggedUser = this.loggedUserService.loggedUser;
   }
 
   matchPassword(abstractControl: AbstractControl) {

@@ -2,16 +2,16 @@
   <ion-toolbar color="primary">
     <ion-title>Szczegóły zgłoszenia {{ issue.id_i}}</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged/notifications"></ion-back-button>
+      <ion-back-button (click)="backToNotifications()"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngIf = "issue.state !== 'Rozwiązane'">
+  <div *ngIf = "issue.state !== 'Rozwiązane' && loggedUser.role !== 'Użytkownik'">
     <ion-card>
       <ion-toolbar>
-        <ion-buttons slot="start">
+        <ion-buttons slot="start" *ngIf = "loggedUser.role !== 'Serwisant'">
            Priorytet:
            <ion-button (click)="changePriority('up')">
              <ion-icon slot="icon-only" name="arrow-up"></ion-icon>
@@ -39,7 +39,7 @@
       <ion-card-content>
         <p>
           Wykonawca: 
-          <ion-select [(ngModel)]="userSolver" interface="popover" multiple="false" [selectedText]="userSolver" (ionChange)="userSelected($event)" [disabled]="issue.state == 'Rozwiązane'" required>
+          <ion-select [(ngModel)]="userSolver" interface="popover" multiple="false" [selectedText]="userSolver" (ionChange)="userSelected($event)" [disabled]="issue.state == 'Rozwiązane' || loggedUser.role !== 'Administrator'" required>
             <ion-select-option *ngFor="let user of servicemans" value="{{user.id_u}} {{user.name}} {{user.lastname}}">
             {{user.id_u}} {{user.name}} {{user.lastname}}
             </ion-select-option>

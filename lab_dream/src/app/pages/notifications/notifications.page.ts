@@ -4,6 +4,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AlertController, ToastController } from '@ionic/angular';
 import { IssueService } from 'src/app/services/issue.service';
 import { User } from 'src/app/models/user';
+import { LoggedUserService } from 'src/app/services/logged-user.service';
 
 @Component({
   selector: 'app-notifications',
@@ -25,18 +26,17 @@ export class NotificationsPage {
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
-    private activatedRoute: ActivatedRoute,
-    private issueService: IssueService
-  ) {}
+    private issueService: IssueService,
+    private loggedUserService: LoggedUserService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.getAllNotifications();
+    });
+    this.loggedUser = this.loggedUserService.loggedUser;
+  }
 
   ionViewWillEnter() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (params && params.loggedUser) {
-        this.loggedUser = JSON.parse(params.loggedUser);
-        this.getAllNotifications();
-        this.specifyColumns();
-      }
-    });
     this.getAllNotifications();
     this.specifyColumns();
   }
@@ -48,7 +48,7 @@ export class NotificationsPage {
   }
 
   datePipe(date) {
-    return date.substring(0, 10);
+    return date.toString().substring(0, 10);
   }
 
   specifyColumns() {

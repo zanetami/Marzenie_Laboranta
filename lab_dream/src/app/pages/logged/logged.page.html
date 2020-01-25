@@ -6,7 +6,7 @@
       <ion-label>Zgłoszenia</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="user-management">
+    <ion-tab-button tab="user-management" *ngIf="loggedUser.role === 'Administrator'">
       <ion-icon name="people"></ion-icon>
       <ion-label>Zarządzanie</ion-label>
     </ion-tab-button>

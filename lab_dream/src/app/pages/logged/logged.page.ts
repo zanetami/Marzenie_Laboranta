@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { LoggedUserService } from 'src/app/services/logged-user.service';
 
 @Component({
   selector: 'app-logged',
@@ -7,6 +9,13 @@ import { Component } from '@angular/core';
 })
 export class LoggedPage {
 
-  constructor() { }
+  loggedUser;
+
+  constructor(
+    private loggedUserService: LoggedUserService
+  ) {
+    this.loggedUser = this.loggedUserService.loggedUser;
+  }
+
 
 }

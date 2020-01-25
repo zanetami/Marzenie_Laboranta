@@ -12,7 +12,11 @@ export class StatisticsService {
   constructor(private http: HttpClient) { }
 
   getStatsUser(id): Observable<any> {
-    return this.http.get(this.mainUrl + `/${id}`);
+    return this.http.get(this.mainUrl + `/user/${id}`);
+  }
+
+  getStatsService(id): Observable<any> {
+    return this.http.get(this.mainUrl + `/service/${id}`);
   }
 
   getStats(): Observable<any> {

@@ -5,7 +5,9 @@ CREATE TABLE users(
     company text,
     role text,
 	login text  NOT NULL unique,
-    password text NOT NULL
+    password text NOT NULL,
+    lab_id integer,
+    FOREIGN KEY (lab_id) REFERENCES laboratory(id)
 );
 
 CREATE SEQUENCE users_id_seq

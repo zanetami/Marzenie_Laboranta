@@ -1,12 +1,9 @@
-CREATE TABLE device (
+CREATE TABLE laboratory (
     id integer PRIMARY KEY,
-    type text,
-    brand text,
-    model text,
     lab_no text
 );
 
-CREATE SEQUENCE device_id_seq
+CREATE SEQUENCE lab_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1;

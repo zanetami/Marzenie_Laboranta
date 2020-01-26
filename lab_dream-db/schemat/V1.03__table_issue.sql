@@ -6,7 +6,9 @@ CREATE TABLE issue (
     priority text,
     accept_d timestamp without time zone,
     solve_d timestamp without time zone,
+    reporter_id integer,
     solver_id integer,
+	FOREIGN KEY (reporter_id) REFERENCES users(id),
 	FOREIGN KEY (solver_id) REFERENCES users(id)
 );
 

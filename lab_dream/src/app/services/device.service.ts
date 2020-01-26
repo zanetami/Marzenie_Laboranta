@@ -8,7 +8,7 @@ import { Device } from '../models/device';
 })
 export class DeviceService {
 
-  private mainUrl = 'http://localhost:3000/devices/';
+  private mainUrl = 'http://192.168.43.175:3000/devices/';
 
   constructor(private http: HttpClient) { }
 

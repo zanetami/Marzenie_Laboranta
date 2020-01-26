@@ -9,7 +9,7 @@ import { User } from '../models/user';
 })
 export class IssueService {
 
-  private mainUrl = 'http://localhost:3000/issues/'
+  private mainUrl = 'http://192.168.43.175:3000/issues/'
 
   constructor(private http: HttpClient) { }
 

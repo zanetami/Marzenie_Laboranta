@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class StatisticsService {
 
-  private mainUrl = 'http://localhost:3000/statistics'
+  private mainUrl = 'http://192.168.43.175:3000/statistics'
 
   constructor(private http: HttpClient) { }
 

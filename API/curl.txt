@@ -1,0 +1,9 @@
+add user
+curl --header "Content-Type: application/json" --request POST --data "{\"login\":\"zanula\",\"name\":\"Żaneta\",\"lastname\":\"Mielareczek\",\"role\":\"admin\",\"password\":\"admin\",\"company\":\"Wasko\"}" http://localhost:3000/users/registerUser
+
+update user
+curl -X PUT -H "Content-Type: application/json" -d "{\"login\":\"zanula\",\"name\":\"Zanetulka\",\"lastname\":\"Mielareczekkoteczekmiauczek\",\"role\":\"admin\",\"password\":\"superwaznyczlowiek\",\"company\":\"Asko\"}" http://localhost:3000/users/updateUser/4
+
+delete user
+curl -X DELETE http://localhost:3000/users/delete/zanmie  
+
